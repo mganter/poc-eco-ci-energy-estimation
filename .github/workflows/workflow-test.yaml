@@ -1,0 +1,49 @@
+name: Daily Tests with Energy Measurement
+run-name: Scheduled - DEV Branch
+on: workflow_dispatch
+permissions:
+  read-all
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone
+        run: git clone https://edp.buildth.ing/DevFW-CICD/fibonacci_pipeline.git fibo
+
+      - name: Start Measurement
+        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        with:
+          task: start-measurement
+        # continue-on-error: true # recommended setting for production. See notes below.
+
+      - name: sleep
+        shell: bash
+        run: |
+          sleep 10
+
+      - name: Tests measurement
+        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'sleep'
+        # continue-on-error: true # recommended setting for production. See notes below.
+
+      - name: build
+        shell: bash
+        run: |
+          cd fibo && go build .
+
+      - name: Tests measurement
+        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        with:
+          task: get-measurement
+          label: 'build'
+        # continue-on-error: true # recommended setting for production. See notes below.
+
+
+      - name: Show Energy Results
+        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        with:
+          task: display-results
+        # continue-on-error: true # recommended setting for production. See notes below.
