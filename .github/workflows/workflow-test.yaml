@@ -12,7 +12,7 @@ jobs:
         run: git clone https://edp.buildth.ing/DevFW-CICD/fibonacci_pipeline.git fibo
 
       - name: Start Measurement
-        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
         with:
           task: start-measurement
         # continue-on-error: true # recommended setting for production. See notes below.
@@ -23,7 +23,7 @@ jobs:
           sleep 10
 
       - name: Tests measurement
-        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
         with:
           task: get-measurement
           label: 'sleep'
@@ -35,7 +35,7 @@ jobs:
           cd fibo && go build .
 
       - name: Tests measurement
-        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
         with:
           task: get-measurement
           label: 'build'
@@ -43,7 +43,7 @@ jobs:
 
 
       - name: Show Energy Results
-        uses: https://github.com/green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
+        uses: green-coding-solutions/eco-ci-energy-estimation@v5 # use hash or @vX here (See note below)
         with:
           task: display-results
         # continue-on-error: true # recommended setting for production. See notes below.
